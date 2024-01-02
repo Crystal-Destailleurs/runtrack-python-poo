@@ -3,8 +3,8 @@ class Operation:
         self.nombre1 = nombre1
         self.nombre2 = nombre2
 
-# Instanciation de la classe
+
 operation_instance = Operation()
 
-# Impression du type de l'objet en console
+
 print(type(operation_instance))
