@@ -4,6 +4,7 @@ class Student:
         self.__prenom = prenom
         self.__numero_etudiant = numero_etudiant
         self.__credits = credits
+        self.__level = self.__studentEval()
 
     def get_nom(self):
         return self.__nom
@@ -17,12 +18,38 @@ class Student:
     def get_credits(self):
         return self.__credits
 
+    def get_level(self):
+        return self.__level
+
     def add_credits(self, nombre_credits):
         if nombre_credits > 0:
             self.__credits += nombre_credits
             print(f"{nombre_credits} crédits ajoutés avec succès.")
+          
+            self.__level = self.__studentEval()
         else:
             print("Erreur : Le nombre de crédits ajoutés doit être supérieur à zéro.")
+
+    def __studentEval(self):
+        if self.__credits >= 90:
+            return "Excellent"
+        elif self.__credits >= 80:
+            return "Très bien"
+        elif self.__credits >= 70:
+            return "Bien"
+        elif self.__credits >= 60:
+            return "Passable"
+        else:
+            return "Insuffisant"
+
+  
+    def studentInfo(self):
+        print("\nInformations de l'étudiant:")
+        print(f"Nom: {self.__nom}")
+        print(f"Prénom: {self.__prenom}")
+        print(f"Identifiant: {self.__numero_etudiant}")
+        print(f"Niveau: {self.__level}")
+        print(f"Total de crédits: {self.__credits} crédits.")
 
 
 john_doe = Student(nom="Doe", prenom="John", numero_etudiant=145)
@@ -31,4 +58,5 @@ john_doe.add_credits(10)
 john_doe.add_credits(5)
 john_doe.add_credits(8)
 
-print(f"\nTotal de crédits pour {john_doe.get_prenom()} {john_doe.get_nom()} ({john_doe.get_numero_etudiant()}): {john_doe.get_credits()} crédits.")
+john_doe.studentInfo()
+
