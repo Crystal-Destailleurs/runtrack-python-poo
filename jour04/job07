@@ -1,0 +1,64 @@
+import random
+
+class Carte:
+    def __init__(self, valeur, couleur):
+        self.valeur = valeur
+        self.couleur = couleur
+
+    def __str__(self):
+        return f"{self.valeur} de {self.couleur}"
+
+
+class Jeu:
+    def __init__(self):
+        self.paquet = self.initialiser_paquet()
+
+    def initialiser_paquet(self):
+        valeurs = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Valet', 'Dame', 'Roi', 'As']
+        couleurs = ['Coeur', 'Carreau', 'Trèfle', 'Pique']
+        paquet = [Carte(valeur, couleur) for valeur in valeurs for couleur in couleurs]
+        return paquet
+
+    def melanger_paquet(self):
+        random.shuffle(self.paquet)
+
+    def tirer_carte(self):
+        if len(self.paquet) == 0:
+            print("Le paquet est vide. Mélangez et redistribuez.")
+            return None
+        return self.paquet.pop()
+
+    def calculer_points(self, main):
+        points = 0
+        as_count = 0
+
+        for carte in main:
+            if carte.valeur in ['Valet', 'Dame', 'Roi']:
+                points += 10
+            elif carte.valeur == 'As':
+                points += 11
+                as_count += 1
+            else:
+                points += int(carte.valeur)
+
+        while points > 21 and as_count:
+            points -= 10
+            as_count -= 1
+
+        return points
+
+jeu = Jeu()
+jeu.melanger_paquet()
+
+main_joueur = [jeu.tirer_carte(), jeu.tirer_carte()]
+main_croupier = [jeu.tirer_carte(), jeu.tirer_carte()]
+
+print("Main du joueur:")
+for carte in main_joueur:
+    print(carte)
+
+print("\nMain du croupier:")
+print(main_croupier[0])  
+
+points_joueur = jeu.calculer_points(main_joueur)
+print(f"\nPoints du joueur: {points_joueur}")
